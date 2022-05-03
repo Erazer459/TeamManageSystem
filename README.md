@@ -6,6 +6,7 @@ A TeamManageSystem base on Spring,SpringMVC,Mybatis
 - java8
 - ssm
 - mysql
+- Maven
 
 大致功能如下:
 - 管理成员信息

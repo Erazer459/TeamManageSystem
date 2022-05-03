@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.rolePermissionMapper.rolePermissionMapper">
+    <select id="getAllRolePermissionMsg" resultType="Role_Permission">
+        select *
+        from role_permissions
+    </select>
+    <select id="getRolePermissionById" parameterType="int" resultType="Role_Permission">
+        select *
+        from role_permissions
+        where permission_id = #{id}
+    </select>
+    <insert id="addRolePermissionMsg" parameterType="Role_Permission">
+        insert into role_permissions(role_id, permission_id)
+        VALUES (#{role_id}, #{permission_id})
+    </insert>
+    <select id="findRolePermission" parameterType="Role_Permission" resultType="Role_Permission">
+        select *
+        from role_permissions
+        where permission_id = #{permission_id}
+          and role_id = #{role_id}
+    </select>
+    <delete id="deleteRolePermission" parameterType="int">
+        delete
+        from role_permissions
+        where role_id = #{role_id}
+          and permission_id = #{permission}
+    </delete>
+    <update id="updateRolePermission">
+        update role_permissions
+        <set>
+            <if test="Role_Permission.role_id!=null and Role_Permission.role_id!=''">
+                Role_Permissions.role_id=#{Role_Permission.role_id},
+            </if>
+            <if test="Role_Permission.permission_id!=null and Role_Permission.permission_id!=''">
+                Role_Permissions.permission_id=#{Role_Permission.permission_id}
+            </if>
+        </set>
+        where Role_Permissions.role_id=#{rId} and Role_Permissions.permission_id=#{pId}
+    </update>
+</mapper>

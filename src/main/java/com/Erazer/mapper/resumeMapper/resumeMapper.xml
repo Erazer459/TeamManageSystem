@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.resumeMapper.resumeMapper">
+    <select id="getAllResume" resultType="Resume">
+        select *
+        from resume
+    </select>
+    <select id="getResumeById" resultType="Resume" parameterType="int">
+        select *
+        from resume
+        where resume_id = #{id}
+    </select>
+    <insert id="addResume" parameterType="Resume" useGeneratedKeys="true" keyColumn="resume_id" keyProperty="resume_id">
+        insert into resume(resume_direct, resume_evaluation, resume_experience, resume_expect, resume_major,
+                           resume_name, resume_other, resume_skills, resume_student_id, resume_telephone)
+        VALUES (#{resume_direct}, #{resume_evaluation}, #{resume_experience}, #{resume_expect}, #{resume_major},
+                #{resume_name}, #{resume_other}, #{resume_skills}, #{resume_student_id}, #{resume_telephone})
+    </insert>
+    <update id="updateResume">
+        update resume
+        <set>
+            <if test="Resume.resume_direct!=null and Resume.resume_direct!=''">
+                Resume.resume_direct=#{Resume.resume_direct},
+            </if>
+            <if test="Resume.resume_evaluation!=null and Resume.resume_evaluation!=''">
+                Resume.resume_evaluation=#{Resume.resume_evaluation},
+            </if>
+            <if test="Resume.resume_experience!=null and Resume.resume_experience!=''">
+                Resume.resume_experience=#{Resume.resume_experience},
+            </if>
+            <if test="Resume.resume_expect!=null and Resume.resume_expect!=''">
+                Resume.resume_expect=#{Resume.resume_expect},
+            </if>
+            <if test="Resume.resume_major!=null and Resume.resume_major!=''">
+                Resume.resume_major=#{Resume.resume_major},
+            </if>
+            <if test="Resume.resume_name!=null and Resume.resume_name!=''">Resume.resume_name=#{Resume.esume_name},</if>
+            <if test="Resume.resume_other!=null and Resume.resume_other!=''">
+                Resume.resume_other=#{Resume.resume_other},
+            </if>
+            <if test="Resume.resume_skills!=null and Resume.resume_skills!=''">
+                Resume.resume_skills=#{Resume.resume_skills},
+            </if>
+            <if test="Resume.resume_student_id!=null and Resume.resume_student_id!=''">
+                Resume.resume_student_id=#{Resume.resume_student_id},
+            </if>
+            <if test="Resume.resume_telephone!=null and Resume.resume_telephone!=''">
+                Resume.resume_telephone=#{Resume.resume_telephone}
+            </if>
+        </set>
+        where Resume.resume_id=#{id}
+    </update>
+    <delete id="deleteResume" parameterType="int">
+        delete
+        from resume
+        where resume_id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.projectMapper.projectMapper">
+    <select id="getAllProject" resultType="Project">
+        select *
+        from project
+    </select>
+    <insert id="addProject" parameterType="Project" useGeneratedKeys="true" keyProperty="project_id"
+            keyColumn="project_id">
+        insert into project(project_content, project_name, project_gif)
+        VALUES (#{project_content}, #{project_name}, #{project_gif})
+    </insert>
+    <delete id="deleteProject" parameterType="int">
+        delete
+        from project
+        where project_id = #{id}
+    </delete>
+    <update id="updateProject">
+        update project
+        <set>
+            <if test="Project.project_content!=null and Project.project_content!=''">
+                Project.project_content=#{Project.project_content},
+            </if>
+            <if test="Project.project_name!=null and Project.project_name!=''">
+                Project.project_name=#{Project.project_name},
+            </if>
+            <if test="Project.project_gif!=null and Project.project_gif!=''">
+                Project.project_gif=#{Project.project_gif}
+            </if>
+        </set>
+        where Project.project_id=#{id}
+    </update>
+    <select id="getProjectById" parameterType="int" resultType="Project">
+        select *
+        from project
+        where project_id = #{id}
+    </select>
+</mapper>

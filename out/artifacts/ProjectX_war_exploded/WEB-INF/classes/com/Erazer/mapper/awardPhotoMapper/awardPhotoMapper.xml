@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.awardPhotoMapper.awardPhotoMapper">
+    <select id="getAllAwardPhotos" resultType="com.Erazer.pojo.Award_Photo">
+        SELECT *
+        FROM award_photo
+    </select>
+    <insert id="addAwardPhoto" parameterType="com.Erazer.pojo.Award_Photo" useGeneratedKeys="true"
+            keyColumn="award_photo_id" keyProperty="award_photo_id">
+        INSERT INTO award_photo(award_photo_loc, award_id)
+        VALUES (#{award_photo_loc}, #{award_id})
+    </insert>
+    <delete id="deleteAwardPhoto" parameterType="int">
+        delete
+        from award_photo
+        where award_photo_id = #{id}
+    </delete>
+    <update id="updateAwardPhoto">
+        update award_photo
+        <set>
+            <if test="award_photo.award_photo_loc!=null and award_photo.award_photo_loc!=''">
+                award_photo.award_photo_loc=#{award_photo.award_photo_loc},
+            </if>
+            <if test="award_photo.award_id!=null and award_photo.award_id!=''">
+                award_photo.award_id=#{award_photo.award_id},
+            </if>
+        </set>
+        where award_photo.award_photo_id=#{id}
+    </update>
+    <select id="getAwardPhotoById" parameterType="int" resultType="com.Erazer.pojo.Award_Photo">
+        select *
+        from award_photo
+        where award_photo_id = #{id}
+    </select>
+</mapper>

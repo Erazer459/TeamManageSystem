@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.projectMemberMapper.projectMemberMapper">
+    <select id="getAllProjectMemberMsg" resultType="ProjectMember">
+        select *
+        from project p,
+             member m,
+             project_member pm
+        where p.project_id = pm.project_id
+          and m.member_id = pm.member_id
+    </select>
+    <select id="getProjectMemberById" parameterType="Project_Member" resultType="Project_Member">
+        select *
+        from project_member
+        where member_id = #{member_id}
+          and project_id = #{project_id}
+    </select>
+    <insert id="addProjectMemberMsg" parameterType="Project_Member">
+        insert into project_member(member_id, project_id)
+        VALUES (#{member_id}, #{project_id})
+    </insert>
+    <select id="getProjectByMemberId" parameterType="int" resultType="Project">
+        select *
+        from project_member pm,
+             project p
+        where p.project_id = pm.project_id
+          and pm.member_id = #{id}
+    </select>
+    <delete id="deleteProjectMemberMsg">
+        delete
+        from project_member
+        where member_id = #{member_id}
+          and project_id = #{project_id}
+    </delete>
+    <update id="updateProjectMemberMsg">
+        update project_member
+        <set>
+            <if test="Project_Member.member_id!=null and Project_Member.member_id!=''">
+                Project_Member.member_id=#{Project_Member.member_id},
+            </if>
+            <if test="Project_Member.project_id!=null and Project_Member.project_id!=''">
+                Project_Member.project_id=#{Project_Member.project_id}
+            </if>
+        </set>
+        where Project_Member.member_id=#{mId} and Project_Member.project_id=#{pId}
+    </update>
+</mapper>

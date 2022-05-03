@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.informMapper.informMapper">
+    <select id="getAllInform" resultType="Inform">
+        select *
+        from inform
+    </select>
+    <select id="getInformById" resultType="Inform">
+        select *
+        from inform
+        where inform_id = #{id}
+    </select>
+    <insert id="addInform" parameterType="Inform" useGeneratedKeys="true" keyColumn="inform_id" keyProperty="inform_id">
+        insert into inform(inform_content, inform_create_time, inform_username, inform_title)
+        values (#{inform_content}, #{inform_create_time}, #{inform_username}, #{inform_title})
+    </insert>
+    <delete id="deleteInform" parameterType="int">
+        delete
+        from inform
+        where inform_id = #{id}
+    </delete>
+    <update id="updateInform">
+        update inform
+        <set>
+            <if test="Inform.inform_create_time!=null">Inform.inform_create_time=#{Inform.inform_create_time}</if>
+            <if test="Inform.inform_content!=null and Inform.inform_content!=''">
+                Inform.inform_content=#{Inform.inform_content}
+            </if>
+            <if test="Inform.inform_username!=null and Inform.inform_username!=''">
+                Inform.inform_username=#{Inform.inform_username}
+            </if>
+            <if test="Inform.inform_title!=null and Inform.inform_title!=''">
+                Inform.inform_title=#{Inform.inform_title}
+            </if>
+        </set>
+        where Inform.inform_id=#{id}
+    </update>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.memberAwardMapper.memberAwardMapper">
+
+    <select id="getAllMemberAwardMsg" resultType="MemberAward">
+        select *
+        from member_award ma,
+             member m,
+             award a
+        where m.member_id = ma.member_id
+          and ma.award_id = a.award_id
+    </select>
+    <delete id="deleteMemberAwardMsg" parameterType="int">
+        delete
+        from member_award
+        where award_id = #{aId}
+          and member_id = #{mId}
+    </delete>
+    <update id="updateMemberAwardMsg" parameterType="int">
+        update member_award
+        <set>
+            <if test="member_id!=null and member_id!=''">member_id=#{member_id},</if>
+            <if test="award_id!=null and award_id!=''">award_id=#{award_id}</if>
+        </set>
+        where award_id=#{aId} and member_id=#{mId}
+    </update>
+    <select id="getMemberAwardByMemberId" parameterType="int" resultType="Award">
+        select *
+        from award,
+             member_award
+        where award.award_id = member_award.award_id
+          and member_award.member_id = #{id}
+    </select>
+    <select id="MemberAwardExist" resultType="Member_Award">
+        select *
+        from member_award
+        where member_id = #{member_id}
+          and award_id = #{award_id}
+    </select>
+    <insert id="addMemberAwardMsg" parameterType="Member_Award">
+        insert into member_award(member_id, award_id)
+        VALUES (#{member_id}, #{award_id})
+    </insert>
+</mapper>

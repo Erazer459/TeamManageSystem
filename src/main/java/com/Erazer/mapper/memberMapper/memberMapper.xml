@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.memberMapper.memberMapper">
+
+
+    <select id="getAllMember" resultType="Member">
+        SELECT *
+        FROM member
+    </select>
+    <select id="getMemberByStuId" resultType="Member">
+        SELECT *
+        FROM member
+        where member_stu_id = #{id}
+    </select>
+    <insert id="addMember" parameterType="Member" useGeneratedKeys="true" keyProperty="member_id" keyColumn="member_id">
+        INSERT INTO member(mem_after_graduated_destination, member_birthday, member_identity, member_class, member_icon,
+                           member_introduction, member_major, member_name, member_stu_id, member_technology,
+                           member_password, member_telephone, role_id)
+        values (#{mem_after_graduated_destination}, #{member_birthday}, #{member_identity}, #{member_class},
+                #{member_icon}, #{member_introduction}, #{member_major}, #{member_name}, #{member_stu_id},
+                #{member_technology}, #{member_password}, #{member_telephone}, #{role_id});
+    </insert>
+    <delete id="deleteMemberById" parameterType="String">
+        DELETE
+        from member
+        where member_id = #{id};
+    </delete>
+    <update id="updateMemberById">
+        update member
+        <set>
+            <if test='Member.mem_after_graduated_destination!=null and Member.mem_after_graduated_destination!="" '>
+                Member.mem_after_graduated_destination=#{Member.mem_after_graduated_destination},
+            </if>
+            <if test='Member.member_birthday!=null and Member.member_birthday!="" '>
+                Member.member_birthday=#{Member.member_birthday},
+            </if>
+            <if test='Member.member_identity!=null and Member.member_identity!="" '>
+                Member.member_identity=#{Member.member_identity},
+            </if>
+            <if test='Member.member_class!=null and Member.member_class!="" '>
+                Member.member_class=#{Member.member_class},
+            </if>
+            <if test='Member.member_icon!=null and Member.member_icon!="" '>Member.member_icon=#{Member.member_icon},
+            </if>
+            <if test='Member.member_introduction!=null and Member.member_introduction!="" '>
+                Member.member_introduction=#{Member.member_introduction},
+            </if>
+            <if test='Member.member_major!=null and Member.member_major!="" '>
+                Member.member_major=#{Member.member_major},
+            </if>
+            <if test='Member.member_name!=null and Member.member_name!="" '>Member.member_name=#{Member.member_name},
+            </if>
+            <if test='Member.member_stu_id!=null and Member.member_stu_id!="" '>
+                Member.member_stu_id=#{Member.member_stu_id},
+            </if>
+            <if test='Member.member_technology!=null and Member.member_technology!="" '>
+                Member.member_technology=#{Member.member_technology},
+            </if>
+            <if test='Member.member_password!=null and Member.member_password!="" '>
+                Member.member_password=#{Member.member_password},
+            </if>
+            <if test='Member.member_telephone!=null and Member.member_telephone!="" '>
+                Member.member_telephone=#{Member.member_telephone},
+            </if>
+            <if test='Member.role_id!=null and Member.role_id!="" '>Member.role_id=#{Member.role_id},</if>
+        </set>
+        where Member.member_id=#{id}
+    </update>
+    <select id="findMemberByCondition" resultType="Member">
+        select * from member
+        <where>
+            <if test='Member.member_id!=0 and Member.member_id!=""'>and Member.member_id LIKE
+                CONCAT('%',#{Member.member_id},'%')
+            </if>
+            <if test='Member.mem_after_graduated_destination!=null and Member.mem_after_graduated_destination!=""'>and
+                Member.mem_after_graduated_destination LIKE CONCAT('%',#{Member.mem_after_graduated_destination},'%')
+            </if>
+            <if test='Member.member_birthday!=null'>and Member.member_birthday=#{member_birthday}</if>
+            <if test='Member.member_identity!=null and Member.member_identity!=""'>and Member.member_identity LIKE
+                CONCAT('%',#{Member.member_identity},'%')
+            </if>
+            <if test='Member.member_class!=null and Member.member_class!=""'>and Member.member_class LIKE
+                CONCAT('%',#{Member.member_class},'%')
+            </if>
+            <if test='Member.member_icon!=null and Member.member_icon!=""'>and Member.member_icon LIKE
+                CONCAT('%',#{Member.member_icon},'%')
+            </if>
+            <if test='Member.member_introduction!=null and Member.member_introduction!=""'>and
+                Member.member_introduction LIKE CONCAT('%',#{Member.member_introduction},'%')
+            </if>
+            <if test='Member.member_major!=null and Member.ember_major!=""'>and Member.member_major LIKE
+                CONCAT('%',#{Member.member_major},'%')
+            </if>
+            <if test='Member.member_name!=null and Member.member_name!=""'>and Member.member_name LIKE
+                CONCAT('%',#{Member.member_name},'%')
+            </if>
+            <if test='Member.member_stu_id!=null and Member.member_stu_id!=""'>and Member.member_stu_id LIKE
+                CONCAT('%',#{Member.member_stu_id},'%')
+            </if>
+            <if test='Member.member_technology!=null and Member.member_technology!=""'>and Member.member_technology LIKE
+                CONCAT('%',#{Member.member_technology},'%')
+            </if>
+            <if test='Member.member_password!=null and Member.member_password!=""'>and Member.member_password LIKE
+                CONCAT('%',#{Member.member_password},'%')
+            </if>
+            <if test='Member.member_telephone!=null and Member.member_telephone!=""'>and Member.member_telephone LIKE
+                CONCAT('%',#{Member.member_telephone},'%')
+            </if>
+            <if test='Member.role_id!=null and Member.role_id!=""'>and Member.role_id LIKE
+                CONCAT('%',#{Member.role_id},'%')
+            </if>
+            <if test='birthday!=null and birthday!=""'>and CONVERT(Member.member_birthday,char(50)) LIKE
+                CONCAT('%',#{birthday},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

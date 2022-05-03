@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.projectPhotoMapper.projectPhotoMapper">
+    <select id="getAllProjectPhoto" resultType="Project_Photo">
+        select *
+        from project_photo
+    </select>
+    <select id="getProjectPhotoByProjectId" parameterType="int" resultType="Project_Photo">
+        select *
+        from project_photo
+        where project_id = #{id}
+    </select>
+    <insert id="addProjectPhoto" parameterType="Project_Photo" useGeneratedKeys="true" keyProperty="project_photo_id"
+            keyColumn="project_photo_id">
+        insert into project_photo(project_photo_loc, project_id)
+        VALUES (#{project_photo_loc}, #{project_id})
+    </insert>
+    <delete id="deleteProjectPhoto" parameterType="int">
+        delete
+        from project_photo
+        where project_photo_id = #{id};
+    </delete>
+    <update id="updateProjectPhoto">
+        update project_photo
+        <set>
+            <if test="Project_Photo.project_photo_loc!=null and Project_Photo.project_photo_loc!=''">
+                Project_Photo.project_photo_loc=#{Project_Photo.project_photo_loc},
+            </if>
+            <if test="Project_Photo.project_id!=null and Project_Photo.project_id!=''">
+                Project_Photo.project_id=#{Project_Photo.project_id}
+            </if>
+        </set>
+        where Project_Photo.project_photo_id=#{id}
+    </update>
+</mapper>

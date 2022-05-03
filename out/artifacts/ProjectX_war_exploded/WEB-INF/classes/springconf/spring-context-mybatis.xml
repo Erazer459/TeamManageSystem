@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+    <!-- 扫描数据库连接配置文件 -->
+    <context:property-placeholder location="classpath:conf/jdbc.properties"/>
+
+    <!-- 配置一个dataSource -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${initialSize}"/>
+        <property name="minIdle" value="${minIdle}"/>
+        <property name="maxActive" value="${maxActive}"/>
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="${maxWait}"/>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+    </bean>
+
+    <!-- 工厂bean：生成SqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 注入连接池 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!--加载mybatis核心文件-->
+        <property name="configLocation" value="springconf.sqlMapConfig-spring.xml"/>
+        <!-- 为 dao-mapper文件中的实体 定义缺省包路径, 如：<select id="queryAll" resultType="User"> 中 User类可以不定义包
+        <property name="typeAliasesPackage" value="com.Erazer.pojo"/>
+         -->
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 配置扫描包路径
+             如果要扫描多个包，中间使用半角逗号隔开
+         -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.Erazer.mapper.userMapper,com.Erazer.mapper.deptMapper"></property>
+    </bean>
+    <!--加载swagger配置文件-->
+    <bean class="com.Erazer.config.SwaggerConfig"/>
+</beans>

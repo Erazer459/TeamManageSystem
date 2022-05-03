@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.awardMapper.awardMapper">
+
+    <select id="getAllAward" resultType="com.Erazer.pojo.Award">
+        SELECT *
+        from award
+    </select>
+    <insert id="addAward" parameterType="Award" useGeneratedKeys="true" keyProperty="award_id" keyColumn="award_id">
+        insert into award(award_name, award_time)
+        VALUES (#{award_name}, #{award_time})
+    </insert>
+    <delete id="deleteAward" parameterType="int">
+        delete
+        from award
+        where award_id = #{id}
+    </delete>
+    <update id="updateAward">
+        update award
+        <set>
+            <if test='Award.award_name!=null and Award.award_name!=""'>Award.award_name=#{Award.award_name},</if>
+            <if test='Award.award_time!=null'>Award.award_time=#{Award.award_time},</if>
+        </set>
+        where Award.award_id=#{id}
+    </update>
+    <select id="getAwardPhoto" resultType="Award_Photo">
+        select *
+        from award_photo
+        where award_id = #{id}
+    </select>
+</mapper>

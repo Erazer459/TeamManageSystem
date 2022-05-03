@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.historyMapper.historyMapper">
+    <select id="getAllHistory" resultType="com.Erazer.pojo.History">
+        select *
+        from history
+    </select>
+    <insert id="addHistory" parameterType="com.Erazer.pojo.History" useGeneratedKeys="true" keyProperty="history_id"
+            keyColumn="history_id">
+        insert into history(history_edit_time, history_info, history_video)
+        values (#{history_edit_time}, #{history_info}, #{history_video})
+    </insert>
+    <delete id="deleteHistory" parameterType="int">
+        delete
+        from history
+        where history_id = #{id}
+    </delete>
+    <update id="updateHistory">
+        update history
+        <set>
+            <if test="History.history_edit_time!=null">History.history_edit_time=#{History.history_edit_time},</if>
+            <if test="History.history_info!=null and History.history_info!=''">
+                History.history_info=#{History.history_info},
+            </if>
+            <if test="History.history_video!=null and History.history_video!=''">
+                History.history_video=#{History.history_video},
+            </if>
+        </set>
+        where History.history_id=#{id}
+    </update>
+    <select id="getHistoryById" parameterType="int" resultType="History">
+        select *
+        from history
+        where history_id = #{id}
+    </select>
+</mapper>

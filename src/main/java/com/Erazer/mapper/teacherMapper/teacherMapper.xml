@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.teacherMapper.teacherMapper">
+    <select id="getAllTeacher" resultType="com.Erazer.pojo.Teacher">
+        select *
+        from teacher
+    </select>
+    <insert id="addTeacher" useGeneratedKeys="true" keyColumn="teacher_id" keyProperty="teacher_id"
+            parameterType="com.Erazer.pojo.Teacher">
+        insert into teacher(teacher_name, teacher_email, teacher_born, teacher_job, teacher_graduation,
+                            teacher_position, teacher_research, teacher_scientific_research, teacher_award_introduction,
+                            teacher_img, teacher_password, role_id)
+        VALUES (#{teacher_name}, #{teacher_email}, #{teacher_born}, #{teacher_job}, #{teacher_graduation},
+                #{teacher_position}, #{teacher_research}, #{teacher_scientific_research}, #{teacher_award_introduction},
+                #{teacher_img}, #{teacher_password}, #{role_id})
+    </insert>
+    <delete id="deleteTeacher" parameterType="String">
+        delete
+        from teacher
+        WHERE teacher_id = #{id}
+    </delete>
+    <update id="updateTeacher">
+        update teacher
+        <set>
+            <if test='Teacher.teacher_name!=null and Teacher.teacher_name!=""'>
+                Teacher.teacher_name=#{Teacher.teacher_name},
+            </if>
+            <if test='Teacher.teacher_email!=null and Teacher.teacher_email!=""'>
+                Teacher.teacher_email=#{Teacher.teacher_email},
+            </if>
+            <if test='Teacher.teacher_born!=null and Teacher.teacher_born!=""'>
+                Teacher.teacher_born=#{Teacher.teacher_born},
+            </if>
+            <if test='Teacher.teacher_job!=null and Teacher.teacher_job!=""'>
+                Teacher.teacher_job=#{Teacher.teacher_job},
+            </if>
+            <if test='Teacher.teacher_graduation!=null and Teacher.teacher_graduation!=""'>
+                Teacher.teacher_graduation=#{Teacher.teacher_graduation},
+            </if>
+            <if test='Teacher.teacher_position!=null and Teacher.teacher_position!=""'>
+                Teacher.teacher_position=#{Teacher.teacher_position},
+            </if>
+            <if test='Teacher.teacher_research!=null and Teacher.teacher_research!=""'>
+                Teacher.teacher_research=#{Teacher.teacher_research},
+            </if>
+            <if test='Teacher.teacher_scientific_research!=null and Teacher.teacher_scientific_research!=""'>
+                Teacher.teacher_scientific_research=#{Teacher.teacher_scientific_research},
+            </if>
+            <if test='Teacher.teacher_award_introduction!=null and Teacher.teacher_award_introduction!=""'>
+                Teacher.teacher_award_introduction=#{Teacher.teacher_award_introduction},
+            </if>
+            <if test='Teacher.teacher_img!=null and Teacher.teacher_img!=""'>
+                Teacher.teacher_img=#{Teacher.teacher_img},
+            </if>
+            <if test='Teacher.teacher_password!=null and Teacher.teacher_password!=""'>
+                Teacher.teacher_password=#{Teacher.teacher_password},
+            </if>
+            <if test='Teacher.role_id!=null and Teacher.role_id!=""'>Teacher.role_id=#{Teacher.role_id},</if>
+        </set>
+        Where Teacher.teacher_id=#{id}
+    </update>
+    <select id="getTeacherByName" resultType="com.Erazer.pojo.Teacher" parameterType="String">
+        select *
+        from teacher
+        where teacher_name like CONCAT('%', #{name}, '%')
+    </select>
+    <select id="getTeacherById" resultType="com.Erazer.pojo.Teacher" parameterType="int">
+        select *
+        from teacher
+        where teacher_id = #{id}
+    </select>
+</mapper>

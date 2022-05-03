@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.leadInspectionMapper.leadInspectionMapper">
+    <select id="getAllLeadInsp" resultType="Lead_Inspection">
+        select *
+        from lead_inspection
+    </select>
+    <select id="getLeadInspById" resultType="Lead_Inspection">
+        select *
+        from lead_inspection
+        where id = #{id}
+    </select>
+    <insert id="addLeadInsp" parameterType="Lead_Inspection" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into lead_inspection(content, date, img, title)
+        VALUES (#{content}, #{date}, #{img}, #{title})
+    </insert>
+    <delete id="deleteLeadInsp" parameterType="int">
+        delete
+        from lead_inspection
+        where id = #{id}
+    </delete>
+    <update id="updateLeadInsp">
+        update lead_inspection
+        <set>
+            <if test="Lead_Inspection.date!=null">Lead_Inspection.date=#{Lead_Inspection.date},</if>
+            <if test="Lead_Inspection.content!=null and Lead_Inspection.content!=''">
+                Lead_Inspection.content=#{Lead_Inspection.content},
+            </if>
+            <if test="Lead_Inspection.img!=null and Lead_Inspection.img!=''">
+                Lead_Inspection.img=#{Lead_Inspection.img},
+            </if>
+            <if test="Lead_Inspection.title!=null and Lead_Inspection.title!=''">
+                Lead_Inspection.title=#{Lead_Inspection.title},
+            </if>
+        </set>
+        where Lead_Inspection.id=#{inspId}
+    </update>
+
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Erazer.mapper.liveMapper.liveMapper">
+    <select id="getAllLive" resultType="Live">
+        select *
+        from live
+    </select>
+    <select id="getLiveById" resultType="Live">
+        select *
+        from live
+        where live_id = #{id}
+    </select>
+    <insert id="addLive" parameterType="Live" useGeneratedKeys="true" keyColumn="live_id" keyProperty="live_id">
+        insert into live(live_content, live_name, live_time)
+        VALUES (#{live_content}, #{live_name}, #{live_time})
+    </insert>
+    <delete id="deleteLive" parameterType="int">
+        delete
+        from live
+        where live_id = #{id}
+    </delete>
+    <update id="updateLive">
+        update live
+        <set>
+            <if test="Live.live_time!=null">Live.live_time=#{Live.live_time}</if>
+            <if test="Live.live_name!=null and Live.live_name!=''">Live.live_name=#{Live.live_name}</if>
+            <if test="Live.live_content!=null and Live.live_content!=''">Live.live_content=#{Live.live_content}</if>
+        </set>
+        where Live.live_id=#{id}
+    </update>
+    <select id="getLivePhotos" parameterType="int" resultType="Live_Photo">
+        select *
+        from live_photo
+        where live_photo.live_id = #{id}
+    </select>
+</mapper>
